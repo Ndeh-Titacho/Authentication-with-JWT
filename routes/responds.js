@@ -1,11 +1,15 @@
 import express from 'express'
 const router = express.Router()
-import {getResponse, setResponse} from '../controller/resController.js'
+import {deleteResponse, getResponse, setResponse, updateResponse} from '../controller/resController.js'
+import {protect} from '../middlewares/authMiddleware.js'
 
 
-router.get('/', getResponse)
+router.get('/', protect, getResponse)
 
-router.post('/', setResponse)
+router.post('/',protect, setResponse)
 
+router.put('/:id',protect, updateResponse)
+
+router.delete('/:id',protect, deleteResponse)
 
 export default router
