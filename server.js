@@ -16,15 +16,28 @@ app.use(cors({
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true // If you are using cookies or HTTP authentication
+    
 }));
 
-
+// Parse incoming JSON requests
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+
+// Define routes
 app.use('/api/', router)
 app.use('/api/users',router01 )
+
+//Display all request made to server
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`, req.body);
+    next();
+});
+
+
+// Custom error handler
 app.use(errorHandler)
 
 
 
+// Start the server
 app.listen(port, ()=> console.log(`Server is running on port ${port}`))
